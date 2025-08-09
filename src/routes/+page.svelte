@@ -1,7 +1,4 @@
 <script lang="ts">
-    import './rhythmBackground.css'
-    import './rhythmGame.css'
-
     // order of which elements should appear, from back -> front
     const backgrounds : string[] = [
         'skydetail', 
@@ -19,7 +16,7 @@
     ];
 
     const backgroundLoopDuration:number = 120;
-    const animationSpeedDifferenceFactor: number = 5;
+    const animationSpeedDifferenceFactor:number = 5;
     const imgType:string = 'webp';
 
     const staticImgNames:string[] = ['sun1', 'sun2'];
@@ -33,7 +30,8 @@
                 class="rhythmBg movingBg"
                 style="
                     background-image: url(/{bg}.{imgType});
-                    animation: scroll {backgroundLoopDuration - idx * animationSpeedDifferenceFactor}s linear infinite;"
+                    {(staticImgNames.includes(bg)) ? `background-position: 45% 0;`
+                        : `animation: scroll ${backgroundLoopDuration - idx * animationSpeedDifferenceFactor}s linear infinite;`}"
             ></div>
         {/each}
     </div>
@@ -41,3 +39,39 @@
 
     </div>
 </div>
+
+<style>
+    *{
+        --rhythmViewportHeight: 80vh;
+    }
+
+    #rhythmGame{
+        height: var(--rhythmViewportHeight);
+        border: 1px solid;
+        width: calc(100vw  - 2px);
+        
+        overflow-x: hidden;
+        background: #AADCFF;
+    }
+
+    .rhythmBg{
+        height: var(--rhythmViewportHeight);
+        width: 100vw;
+    }
+
+    .movingBg{
+        background-size:cover;
+        background-repeat: repeat-x;
+        position: absolute;
+    }
+
+    @keyframes -global-scroll {
+        0% {
+            background-position: 0 0;
+        }
+
+        100% {
+            background-position: calc(-100% + 99vw) 0;
+        }
+    }
+</style>
