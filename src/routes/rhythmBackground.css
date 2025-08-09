@@ -1,5 +1,7 @@
 #rhythmGame{
-    height: 600px;
+    --rhythmViewportHeight: 80vh;
+
+    height: var(--rhythmViewportHeight);
     border: 1px solid;
     width: calc(100vw  - 2px);
     
@@ -7,7 +9,7 @@
     background: #AADCFF;
 
     .rhythmBg{
-        height: 600px;
+        height: var(--rhythmViewportHeight);
         width: 100vw;
     }
 
