@@ -5,7 +5,6 @@
     // order of which elements should appear, from back -> front
     const backgrounds : string[] = [
         'skydetail', 
-        'hit effects',
         'sun1',
         'pillar3',
         'cloud6',
@@ -21,7 +20,9 @@
 
     const backgroundLoopDuration:number = 120;
     const animationSpeedDifferenceFactor: number = 5;
-    const imgType:string = 'svg';
+    const imgType:string = 'webp';
+
+    const staticImgNames:string[] = ['sun1', 'sun2'];
 
 </script>
 
