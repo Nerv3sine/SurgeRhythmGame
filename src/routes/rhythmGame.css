@@ -1,0 +1,10 @@
+#rhythmGame{
+    .note{
+        position: absolute;
+        left: 1%;
+        top: 1%;
+        width: 25px;
+        height: 25px;
+        background-color: blue;
+    }
+}

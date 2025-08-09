@@ -1,0 +1,35 @@
+#rhythmGame{
+    height: 600px;
+    border: 1px solid;
+    width: calc(100vw  - 2px);
+    
+    overflow-x: hidden;
+    background: #AADCFF;
+
+    .rhythmBg{
+        height: 600px;
+        width: 100vw;
+    }
+
+    .movingBg{
+        background-size:cover;
+        background-repeat: repeat-x;
+        position: absolute;
+        /* animation: scroll 60s linear infinite; */
+    }
+
+    #skyDetail{
+        background-image: url(/skydetail.svg);
+    }
+}
+
+@keyframes scroll {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: calc(-100% + 99vw) 0;
+        /* background-position: 0 0; */
+    }
+}
