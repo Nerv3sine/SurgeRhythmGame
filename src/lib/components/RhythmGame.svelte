@@ -1,9 +1,68 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import Background from "./Background.svelte";
+
+    var rhythmTrack: HTMLCanvasElement;
+
+    $: innerWidth = 0;
+    $: innerHeight = 0;
+
+    onMount(() => {
+        let ctx = rhythmTrack.getContext("2d");
+        var cntx:CanvasRenderingContext2D;
+        if(ctx == null){
+            return;
+        }
+        cntx = ctx!;
+        TrackSetup();
+
+        function TrackSetup(){
+            cntx.fillStyle = "black";
+            cntx.globalAlpha = 0.4;
+            cntx.fillRect(xStd(0.1), yStd(0.58), xStd(0.8), yStd(0.37));
+            
+            const trackWidth = 0.065;
+            const trackLength = 0.75;
+            const xPos = 0.125;
+            const trackPositions = [0.625, 0.725, 0.825]
+            
+            cntx.strokeStyle = "white";
+            cntx.lineWidth = 1.5;
+            trackPositions.forEach(yPos => {
+                cntx.globalAlpha = 0.4;
+                cntx.fillRect(xStd(xPos), yStd(yPos), xStd(trackLength), yStd(trackWidth));
+
+                cntx.globalAlpha = 1;
+                cntx.strokeRect(xStd(xPos), yStd(yPos), xStd(trackLength), yStd(trackWidth));
+            });
+
+            const btnPos = 0.75;
+            const btnColors = ["FF9D9D", "DFFFBE", "F9E8A5"]
+            trackPositions.forEach((yPos, i) => {
+                cntx.beginPath();
+                cntx.lineWidth = 0.1;
+                cntx.arc(xStd(btnPos), yStd(yPos + trackWidth / 2), yStd(trackWidth/2 - .01), 0, 2 * Math.PI);
+                cntx.fillStyle = "#" + btnColors[i];
+                cntx.fill();
+                cntx.stroke();
+            });
+        }
+    });
+
+    //all props are rendered based on a certain aspect ratio
+    function xStd(size: number){
+        return size * innerWidth
+    }
+
+    function yStd(size: number){
+        return size * 0.8 * innerHeight
+    }
 </script>
 
+<svelte:window bind:innerHeight bind:innerWidth/>
 <div id="rhythmGame">
     <Background/>
+    <canvas height={innerHeight * 0.8} width={innerWidth} bind:this={rhythmTrack}></canvas>
 </div>
 
 <style>
@@ -18,5 +77,11 @@
         
         overflow-x: hidden;
         background: #AADCFF;
+    }
+
+    canvas{
+        position: absolute;
+        height: var(--rhythmViewportHeight);
+        width: 100vw;
     }
 </style>

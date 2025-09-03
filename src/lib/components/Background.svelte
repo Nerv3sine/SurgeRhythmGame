@@ -43,6 +43,7 @@
     .rhythmBg{
         height: var(--rhythmViewportHeight);
         width: 100vw;
+        position: absolute;
     }
 
     .movingBg{
