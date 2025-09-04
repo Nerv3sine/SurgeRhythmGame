@@ -14,6 +14,25 @@
             return;
         }
         cntx = ctx!;
+        let testSong = 
+        `
+        test
+        1
+        0, 50
+        0, 75
+        0, 100
+        1, 100
+        2, 100
+        `
+
+        let beatMap =
+        `0, 50
+        0, 75
+        0, 100
+        1, 100
+        2, 100`
+        let beatsList = beatMap.split("\n")
+
         TrackSetup();
 
         function TrackSetup(){
