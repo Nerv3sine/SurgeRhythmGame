@@ -14,6 +14,7 @@
             return;
         }
         cntx = ctx!;
+
         let testSong = 
         `
         test
@@ -26,12 +27,15 @@
         `
 
         let beatMap =
-        `0, 50
-        0, 75
-        0, 100
-        1, 100
-        2, 100`
+        `0, 2500
+        0, 5000
+        0, 5500
+        1, 6000
+        2, 6000`
         let beatsList = beatMap.split("\n")
+
+        let cloudSprites = ["red clouds", "green clouds", "yellow clouds"]
+        const trackPositions = [0.625, 0.725, 0.825]
 
         TrackSetup();
 
@@ -43,7 +47,6 @@
             const trackWidth = 0.065;
             const trackLength = 0.75;
             const xPos = 0.125;
-            const trackPositions = [0.625, 0.725, 0.825]
             
             cntx.strokeStyle = "white";
             cntx.lineWidth = 1.5;
@@ -65,6 +68,40 @@
                 cntx.fill();
                 cntx.stroke();
             });
+
+            feedTrack(0)
+        }
+
+        const runtimeMS = 500;
+
+        function feedTrack(note:number){
+            let data:string[] = beatsList[note].split(", ");
+            let trackNo:number = parseInt(data[0]);
+            let duration:number = parseInt(data[1]);
+            if(note != 0){
+                duration -= parseInt(beatsList[note - 1].split(", ")[1]);
+            }
+            setTimeout(() => {
+                let cloud = new Image();
+                cloud.src = `/${cloudSprites[trackNo]}.webp`;
+                // cntx.drawImage(cloud, xStd(0.2), yStd(trackPositions[trackNo]));
+                spawnCloud(trackNo, cloud)
+                feedTrack(note + 1)
+            }, duration)
+        }
+
+        function spawnCloud(track: number, sprite: HTMLImageElement){
+            const startPos = 0.2;
+            const finalPos = 0.75;
+            const animFrames = 50;
+            var cPosition = startPos;
+            const cloudObj = setInterval(() => {
+                cntx.drawImage(sprite, xStd(cPosition), yStd(trackPositions[track]));
+                cPosition += (finalPos - startPos) / animFrames
+                if(cPosition > finalPos){
+                    clearInterval(cloudObj);
+                }
+            }, runtimeMS / animFrames);
         }
     });
 
